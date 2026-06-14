@@ -1,0 +1,161 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/appWbKUiUP9NE4vu2/tblq4uWAsOsiSQnxb/viwrwpXckOAHmldqA?blocks=hide",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/appWbKUiUP9NE4vu2/tblq4uWAsOsiSQnxb/viwrwpXckOAHmldqA?blocks=hide",
+          "mode": "url"
+        },
+        "triggerField": "Order Number",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bbe79681-fdf7-4fb1-a8ed-8689d84ed467",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "I0eONySsEvsZq6cI",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.1-flash-lite",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.1-flash-lite"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a customer order processing assistant.\n\nYour task is to process order data from Airtable and generate a structured email response.\n\n---\nINPUT DATA:\nOrder Number: {{ $json.fields['Order Number'] }}\nCustomer: {{ $json.fields.Customer }}\nProduct: {{ $json.fields.Product }}\nQuantity: {{ $json.fields.Quantity }}\nPrice: {{ $json.fields.Price }}\nDate: {{ $json.fields.Date }}\nStatus: {{ $json.fields.Status }}\n\n---\nINSTRUCTIONS:\n1. Extract each field from the input data above\n2. Create a professional email with subject and body\n3. Return ONLY valid JSON (nothing else)\n4. Do NOT add any explanation, markdown, or code blocks\n\n---\nOUTPUT REQUIREMENTS:\n- Return valid JSON only\n- Use \\n for line breaks in email_body\n- No markdown formatting, no backticks\n- No extra text before or after JSON\n- Valid UTF-8 characters only\n\n---\nOUTPUT FORMAT (REQUIRED):\n{\n  \"email_subject\": \"Order Update: Order #<ORDER_NUMBER> - <STATUS>\",\n  \"email_body\": \"Dear <CUSTOMER>,\\n\\nWe're writing to update you on your order.\\n\\nOrder Details:\\n- Order Number: <ORDER_NUMBER>\\n- Product: <PRODUCT>\\n- Quantity: <QUANTITY>\\n- Unit Price: $<PRICE>\\n- Order Date: <DATE>\\n- Current Status: <STATUS>\\n\\nThank you for your business!\\n\\nBest regards,\\nCustomer Success Team\",\n  \"recipient\": \"<CUSTOMER_EMAIL>\"\n}\n\n---\nCRITICAL RULES:\n- Replace <ORDER_NUMBER>, <CUSTOMER>, <PRODUCT>, <QUANTITY>, <PRICE>, <DATE>, <STATUS> with actual values only\n- Do NOT include placeholder brackets < > in output\n- Ensure JSON is perfectly valid and parseable\n- Return nothing but the JSON object"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "ceb2afa8-6ada-4671-8e7f-f2bcfc3cc29b",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "iSB06RKMyDVcNL4f",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "hidrees454@gmail.com",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        16
+      ],
+      "id": "bec0e0dd-9936-4565-b0dd-76266e27e6a4",
+      "name": "Send a message",
+      "webhookId": "7ab92898-0b72-4990-bd00-207b6f33c291",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HmIvA1xAQ8PSxAID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// The response might already be the object, not in an array\nconst response = $json;\nconst jsonText = response.content.parts[0].text;\nconst emailData = JSON.parse(jsonText);\n\nreturn {\n  email_subject: emailData.email_subject,\n  email_body: emailData.email_body,\n  recipient: emailData.recipient\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "95a720ec-7116-4411-91f1-5a9ac6be6cbb",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f3e6a5c6-7748-4988-a944-a9439d22a4d6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "585845d9bed2e7c98c343e769717b1c621c5a966bb86102d1f3599ac047aa3bf"
+  },
+  "id": "YDbQ8leIAgFXoILv",
+  "tags": []
+}
