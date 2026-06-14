@@ -1,4 +1,4 @@
-# n8n Automations Lab
+# n8n Automations
 
 A collection of AI-powered automation workflows built using **n8n**, **LLM APIs**, and external APIs & tools.
 
