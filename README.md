@@ -1,4 +1,4 @@
-# 🚀 n8n Automations Lab
+# n8n Automations Lab
 
 A collection of AI-powered automation workflows built using **n8n**, **LLM APIs**, and external APIs & tools.
 
@@ -13,8 +13,6 @@ Each automation is designed to reduce manual work and improve efficiency using e
 ## 📦 Automations
 
 ### 1. Order Processing System
-
-::contentReference[oaicite:0]{index=0}
 
 **Flow:**
 Airtable → Gemini AI → JavaScript Code Node(json conversion) → Gmail
