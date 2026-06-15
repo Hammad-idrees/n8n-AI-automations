@@ -1,7 +1,27 @@
-# n8n Automations
+<p align="center">
+  <img src="https://raw.githubusercontent.com/n8n-io/n8n/master/assets/n8n-logo.png" alt="n8n logo" width="120" />
+</p>
 
-Collection of AI-powered and workflow automation projects built with n8n.
+<h1 align="center">
+  ⚡ n8n Automations
+</h1>
 
+<p align="center">
+  <em>🤖 AI-powered · 🔁 Workflow automation · 🧩 Built with n8n</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/n8n-0.234.0-green?logo=n8n&logoColor=white&style=for-the-badge" alt="n8n version" />
+  <img src="https://img.shields.io/badge/AI_Ready-✅-blue?style=for-the-badge" alt="AI Ready" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge" alt="PRs Welcome" />
+</p>
+
+<p align="center">
+  <i>✨ Collection of AI-powered and workflow automation projects built with n8n ✨</i>
+</p>
+
+<hr />
 ## Automations
 
 ### 1. Order Processing System
