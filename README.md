@@ -13,7 +13,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/n8n-0.234.0-green?logo=n8n&logoColor=white&style=for-the-badge" alt="n8n version" />
   <img src="https://img.shields.io/badge/AI_Ready-✅-blue?style=for-the-badge" alt="AI Ready" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
+  
   <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge" alt="PRs Welcome" />
 </p>
 
@@ -22,7 +22,7 @@
 </p>
 
 <hr />
-## Automations
+
 
 ### 1. Order Processing System
 
