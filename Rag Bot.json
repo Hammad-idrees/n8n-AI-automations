@@ -1,0 +1,291 @@
+{
+  "name": "Rag Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d24fea43-03e0-4494-9ef6-90688e7e80ef",
+      "name": "When chat message received",
+      "webhookId": "37d8c221-8eb5-493b-ae14-abc48f510613"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an AI assistant specialized in analyzing Tesla's quarterly financial reports. Your primary task is to answer questions accurately and precisely using the vector database, which contains relevant documents (Q3 and Q4 reports).\n\nOnly provide information that you retrieve from the documents (or verified expert knowledge). If something is not included in the dataset or is unclear, clearly state that you do not have sufficient information.\n\nStructure of your responses:\n• Concise and to the point\n• Specific numbers and facts, when available\n• Clearly indicate which quarterly report (Q3 or Q4) the information comes from\n\nObjective:\nProvide users with reliable and quick insights into Tesla's quarterly financials without unnecessary details"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "cbd9f7c7-40a2-47c9-b7b5-a9b9d3439084",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "dda3bf7f-d28f-434c-a6ab-4f2922fc09e3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nrTgzjiAImRX6xN9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        224,
+        208
+      ],
+      "id": "aa2b8385-69bd-4566-8630-926f388aee0f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n-course",
+          "mode": "list",
+          "cachedResultName": "n8n-course"
+        },
+        "options": {
+          "pineconeNamespace": "tslan8n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        288,
+        384
+      ],
+      "id": "3a936778-782c-4bcd-bac4-5ac020bbce55",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "4BFtAICF2qM4oUaF",
+          "name": "Pinecone account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        144,
+        528
+      ],
+      "id": "389fce7f-acf3-46fa-91d1-b3bd5be82309",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nrTgzjiAImRX6xN9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        608,
+        400
+      ],
+      "id": "7fa272f9-effb-45b3-83aa-1a764cc2c359",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nrTgzjiAImRX6xN9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Return documents related to Tesla Q3 and Q4, the financials, outlook, merges and everything important from the earnings report.",
+        "topK": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        208
+      ],
+      "id": "74d80be7-5c35-44fb-80fa-d1b95eccf5c8",
+      "name": "tsla_q"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        672,
+        208
+      ],
+      "id": "f8844fc9-905b-41a5-8843-fc2685c38f7d",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "sendTo": "hidrees454@gmail.com",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "ca7f9c2b-7ee1-4a9c-b7d9-9ffe39a56924",
+      "name": "Send a message",
+      "webhookId": "ced51037-df0c-4cac-8ccc-089c6d8700a4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HmIvA1xAQ8PSxAID",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "tsla_q",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "tsla_q",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tsla_q": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3a09b8c2-03d7-41ed-9a5a-e254252458f7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "585845d9bed2e7c98c343e769717b1c621c5a966bb86102d1f3599ac047aa3bf"
+  },
+  "id": "ECfUZ4CbAgCw2gSM",
+  "tags": []
+}
