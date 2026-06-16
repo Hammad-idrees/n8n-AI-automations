@@ -1,4 +1,4 @@
-# 4. AI-Powered Email Assistant with RAG
+# AI-Powered Email Assistant with RAG
 
 **Flow:** Chat → Gemini AI Agent → Pinecone RAG Retrieval → Gmail Integration
 
