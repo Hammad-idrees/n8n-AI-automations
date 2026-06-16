@@ -1,0 +1,118 @@
+{
+  "name": "Send mail pinecone",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3ea6ebdc-6211-4d99-88d4-81d4eab11c70",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "133900c0-c1d4-45d9-85f7-1608b25f8c0b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "3ea4450c-9584-4503-93f3-65b786e48f1f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nrTgzjiAImRX6xN9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        208
+      ],
+      "id": "1d2c7ac9-22f0-4c31-8e95-a9b67e2845ee",
+      "name": "Send a message in Gmail",
+      "webhookId": "cab01ce0-9a0c-4e85-8390-5c5b19e08ac2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HmIvA1xAQ8PSxAID",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1498b14b-6d81-4cdd-94fa-93715fd98b12",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "585845d9bed2e7c98c343e769717b1c621c5a966bb86102d1f3599ac047aa3bf"
+  },
+  "id": "dcWtt0yyPinVdKWU",
+  "tags": []
+}
