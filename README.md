@@ -100,3 +100,35 @@
 - PDF Text Extraction
 - Recursive Character Text Splitter
 - n8n Automation
+
+# 4. AI-Powered n8n Workflow Builder with RAG
+
+**Flow:** Chat Trigger → Claude Opus 4 Agent → Pinecone RAG Retrieval → n8n API → Workflow Creation
+
+**Description:**
+Generates complete n8n workflows from natural language prompts using Claude Opus 4 and Pinecone RAG. The workflow automatically creates the generated automation in n8n and returns a direct workflow link.
+
+## Features
+
+* Converts plain English into n8n workflows
+* Uses RAG for workflow examples and best practices
+* Automatically creates workflows via the n8n API
+* Returns a direct workflow URL
+* Generates valid, importable n8n JSON
+
+## Requirements
+
+* n8n Instance
+* Anthropic API Key
+* OpenAI API Key
+* Pinecone Index
+* Google Drive Folder (RAG training data)
+
+## Technologies Used
+
+* n8n
+* Claude Opus 4
+* Pinecone
+* OpenAI Embeddings
+* Google Drive
+* RAG (Retrieval-Augmented Generation)
