@@ -133,7 +133,7 @@ Generates complete n8n workflows from natural language prompts using Claude Opus
 * Google Drive
 * RAG (Retrieval-Augmented Generation)
 
-# 5. AI-Powered Email Assistant with RAG
+### 5. AI-Powered Email Assistant with RAG
 
 **Flow:** Chat → Gemini AI Agent → Pinecone RAG Retrieval → Gmail Integration
 
@@ -179,4 +179,42 @@ Email Generation → Gmail API → Send Email
 * RAG (Retrieval-Augmented Generation)
 * Gmail API
 * Google Docs
+
+
+### 6. AI-Powered Email Assistant
+
+**Flow:** Chat → Gemini AI Agent → Gmail Integration
+
+**Description:**
+A conversational email assistant that drafts and sends professional emails through Gmail using natural language commands.
+
+## Features
+
+* Natural language email composition
+* Direct Gmail integration
+* Powered by Google Gemini
+* Professional email formatting with automatic signature
+* Conversation memory for context
+
+## How It Works
+
+1. User sends a natural language request via chat
+2. Gemini generates a professional email
+3. Email is automatically sent through Gmail
+4. User receives a confirmation message
+
+## Requirements
+
+* n8n Instance
+* Google Gemini API Key
+* Gmail Account with OAuth2
+
+## Technologies Used
+
+* n8n
+* Google Gemini Chat Model
+* Gmail API
+* Buffer Window Memory
+
+
 
