@@ -1,0 +1,232 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "- Starts the workflow every day at 7 AM.\n- Adjust the time if you want the workflow to run at a different hour.",
+        "height": 314.47468983163634,
+        "width": 248.47086922498647
+      },
+      "id": "16a6641a-2d93-4e34-8887-cbeaf9cbbc4d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1104,
+        32
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "Fetches all emails received in the past 24 hours from the email address",
+        "height": 313.40934714314244,
+        "width": 213.36643278764896
+      },
+      "id": "16fc6fdc-bb06-4740-962c-b665dcd60775",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -816,
+        48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "id": "65675997-f84b-44cd-9b6d-951d2a979da3",
+      "name": "Daily 7AM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -1024,
+        176
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "q": "={{ \n  (() => {\n    const yesterday = new Date();\n    yesterday.setDate(yesterday.getDate() - 1);\n    return `isb.quantana@quantana.in after:${yesterday.getFullYear()}/${(yesterday.getMonth() + 1).toString().padStart(2, '0')}/${yesterday.getDate().toString().padStart(2, '0')}`;\n  })()\n}}"
+        }
+      },
+      "id": "76d1d653-3da2-41ec-a7d5-9ebc358e12d4",
+      "name": "Fetch Emails - Past 24 Hours",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        -752,
+        176
+      ],
+      "webhookId": "20f1d11d-8a69-43f3-9323-33eaf1b3b600",
+      "typeVersion": 2.1,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HmIvA1xAQ8PSxAID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "include": "specifiedFields",
+        "fieldsToInclude": "id, From, To, CC, snippet",
+        "options": {}
+      },
+      "id": "0302d88b-bf68-4929-9f75-435d7346ff47",
+      "name": "Organize Email Data - Morning",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        -512,
+        176
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "sendTo": "hidrees454@gmail.com",
+        "subject": "=ESAgent - {{ new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) }}-00:00 to {{ new Date(new Date().setDate(new Date().getDate())).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) }}-07:00AM",
+        "message": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Email Summary - isbonline@quantana.in</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 0;\n            padding: 0;\n            background-color: #f9f9f9;\n            color: #333;\n            line-height: 1.6;\n        }\n        .email-container {\n            max-width: 600px;\n            margin: 20px auto;\n            background: #ffffff;\n            border: 1px solid #ddd;\n            border-radius: 10px;\n            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n        }\n        .email-header {\n            background-color: #0073e6;\n            color: #fff;\n            padding: 20px;\n            text-align: center;\n            border-top-left-radius: 10px;\n            border-top-right-radius: 10px;\n        }\n        .email-header h1 {\n            margin: 0;\n            font-size: 24px;\n        }\n        .email-content {\n            padding: 20px;\n        }\n        .section-title {\n            font-size: 20px;\n            color: #0073e6;\n            margin-bottom: 10px;\n        }\n        ul {\n            list-style: none;\n            padding: 0;\n        }\n        ul li {\n            margin: 10px 0;\n            padding: 10px;\n            background: #f4f4f4;\n            border-left: 4px solid #0073e6;\n            border-radius: 5px;\n        }\n        .action-item {\n            font-weight: bold;\n            margin: 5px 0;\n        }\n        .action-detail {\n            margin-left: 10px;\n        }\n        .email-footer {\n            background-color: #0073e6;\n            color: #fff;\n            text-align: center;\n            padding: 10px;\n            font-size: 14px;\n            border-bottom-left-radius: 10px;\n            border-bottom-right-radius: 10px;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"email-container\">\n        <div class=\"email-header\">\n            <h1>Email Summary</h1>\n        </div>\n        <div class=\"email-content\">\n            <div>\n                <h2 class=\"section-title\">Summary of Emails:</h2>\n                <ul>\n                    {{ $json.message.content.summary_of_emails.map(email => `<li>${email}</li>`).join('') }}\n                </ul>\n            </div>\n            <div>\n                <h2 class=\"section-title\">Actions:</h2>\n                <ul>\n                    {{ $json.message.content.actions.map(action => `\n                        <li>\n                            <span class=\"action-item\">${action.name}:</span>\n                            <span class=\"action-detail\">${action.action}</span>\n                        </li>\n                    `).join('') }}\n                </ul>\n            </div>\n        </div>\n        <div class=\"email-footer\">\n            <p>Generated by Quantana ESAgent <br /> A Quantana AI Labs Initiative\n        </div>\n    </div>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false,
+          "ccList": "user@example.com",
+          "replyToSenderOnly": false
+        }
+      },
+      "id": "f093b464-e7f4-48ef-942e-748ede7aefbf",
+      "name": "Send Summary - Morning",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        64,
+        176
+      ],
+      "webhookId": "83f2aeb9-7b6c-4336-b5ed-8acfcd259850",
+      "typeVersion": 2.1,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HmIvA1xAQ8PSxAID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Organizes the fetched email data, extracting fields like sender, receiver, CC, and a preview snippet.",
+        "height": 305.83657700487913,
+        "width": 226.7095107678671
+      },
+      "id": "3e846833-14ed-4122-9ed9-5fa5e332a0b6",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -576,
+        48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "- Sends the summarized email report to recipients with a styled HTML layout.\n- Update the \"sendTo\" and \"ccList\" fields with the email addresses of your recipients.\n\n",
+        "height": 359.7308639651144,
+        "width": 232.8435827211592
+      },
+      "id": "510a6cd0-0583-4349-a38e-b1798a913616",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        16,
+        48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Go through this email summary and identify all key details mentioned, any specific issues to look at, and action items.\nUse this format to output\n{\n  \"summary_of_emails\": [\n    \"Point 1\",\n    \"Point 2\",\n    \"Point 3\"\n  ],\n  \"actions\": [\n    {\n      \"name\": \"Name 1\",\n      \"action\": \"Action 1\"\n    },\n    {\n      \"name\": \"Name 1\",\n      \"action\": \"Action 2\"\n    },\n    {\n      \"name\": \"Name 2\",\n      \"action\": \"Action 3\"\n    }\n  ]\n}\n\nInput Data:\n\n {{ $json.data.toJsonString() }}\n\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        176
+      ],
+      "id": "760d2ebd-c8f4-483b-86f4-d844846b0e1b",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nrTgzjiAImRX6xN9",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Daily 7AM Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Emails - Past 24 Hours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Emails - Past 24 Hours": {
+      "main": [
+        [
+          {
+            "node": "Organize Email Data - Morning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organize Email Data - Morning": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c0543f79-d556-4a6b-a86b-d1451f7d9d87",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "585845d9bed2e7c98c343e769717b1c621c5a966bb86102d1f3599ac047aa3bf"
+  },
+  "id": "ristBboYaJACe4OF",
+  "tags": []
+}
