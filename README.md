@@ -258,4 +258,56 @@ The workflow automatically generates:
 - Structured HTML reports
 - Daily inbox activity reports
 
+### 8. Automated Sponsorship Email Detection & Reply System
+
+**Flow:** Gmail Trigger → AI Agent → Sponsorship Detection → OpenAI → Gmail Reply
+
+**Description:** Automatically monitors incoming emails, identifies sponsorship inquiries using AI, generates personalized sponsorship responses based on predefined pricing and collaboration terms, and sends replies directly through Gmail.
+
+### Features
+
+- Monitors incoming Gmail messages in real-time
+- Detects sponsorship-related emails using AI
+- Filters non-sponsorship emails automatically
+- Generates professional sponsorship responses
+- Includes predefined sponsorship pricing and terms
+- Sends automated email replies via Gmail
+- Eliminates manual screening of sponsorship requests
+
+### Workflow Steps
+
+1. Gmail Trigger detects new incoming emails.
+2. Email content is extracted and formatted.
+3. AI analyzes whether the email is a sponsorship inquiry.
+4. Non-sponsorship emails are ignored automatically.
+5. Sponsorship emails are passed to OpenAI.
+6. A personalized response is generated based on sponsorship terms.
+7. Gmail sends the reply directly to the sender.
+
+### Required Configuration
+
+#### Gmail
+- Gmail OAuth Credentials
+- Gmail Trigger Setup
+- Reply Permissions
+
+#### OpenAI
+- OpenAI API Key
+- GPT Model Configuration
+
+#### Sponsorship Details
+- Channel Information
+- Sponsorship Pricing
+- Collaboration Conditions
+- Brand Acceptance Criteria
+
+### Output
+
+The workflow automatically provides:
+
+- Sponsorship inquiry classification
+- AI-generated sponsorship responses
+- Automated Gmail replies
+- Consistent pricing communication
+- Professional sponsor engagement
 
