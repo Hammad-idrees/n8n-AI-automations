@@ -216,5 +216,46 @@ A conversational email assistant that drafts and sends professional emails throu
 * Gmail API
 * Buffer Window Memory
 
+### 7. AI-Powered Email Automation – Filtering Messages & Auto-Replying
+
+**Flow:** Schedule Trigger → Gmail → Gemini AI → Gmail
+
+**Description:** Automatically monitors incoming emails, analyzes their content using Gemini AI, generates concise summaries with action items, and delivers a professionally formatted email report to designated recipients.
+
+### Features
+
+- Fetches emails received in the last 24 hours
+- Organizes and processes email metadata automatically
+- Uses Gemini AI to summarize email conversations
+- Extracts key insights and action items
+- Generates professional HTML email reports
+- Sends automated summaries via Gmail
+- Runs on a customizable daily schedule
+
+### Required Configuration
+
+#### Gmail
+- Gmail OAuth Credentials
+- Sender Email Account
+- Recipient Email Address(es)
+
+#### Gemini AI
+- Google Gemini API Key
+- Gemini Model Selection
+
+#### Workflow Settings
+- Schedule Time
+- Email Query Filters
+- Report Recipients
+
+### Output
+
+The workflow automatically generates:
+
+- Email summaries
+- Important discussion points
+- Actionable tasks and follow-ups
+- Structured HTML reports
+- Daily inbox activity reports
 
 
