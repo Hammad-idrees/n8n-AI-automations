@@ -364,7 +364,7 @@ Features
 Technologies Used
 
 - n8n Automation Platform
-- OpenAI GPT-4o
+- OpenAI GPT API
 - Telegram Bot API
 - AI Agent (LangChain)
 - Window Buffer Memory
