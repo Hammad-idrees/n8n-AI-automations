@@ -342,3 +342,36 @@ Technologies Used
 - Gmail Integration
 
 ---
+### 10. Telegram AI Assistant with Web Search Automation
+
+Flow: Telegram Trigger → AI Agent → OpenAI GPT-4o → Memory Buffer → Tools (Search Sub-Workflow, Calculator) → Telegram Response
+
+Description: An intelligent Telegram AI assistant built with n8n that automatically processes user messages, understands queries using OpenAI GPT-4o, maintains conversation context, performs calculations, executes web searches, and delivers AI-generated responses directly through Telegram.
+
+Features
+
+- Receives and processes Telegram messages automatically
+- Uses OpenAI GPT-4o for natural language understanding
+- Maintains session-based conversation history using memory buffer
+- Supports multi-turn conversations with context retention
+- Performs mathematical calculations using AI tools
+- Searches the web using Hacker News, Wikipedia, and SerpAPI integrations
+- Handles complex research queries through AI sub-workflow architecture
+- Uses external tools dynamically through AI Agent
+- Provides real-time AI-generated responses in Telegram
+- Fully automated end-to-end AI assistant workflow
+
+Technologies Used
+
+- n8n Automation Platform
+- OpenAI GPT-4o
+- Telegram Bot API
+- AI Agent (LangChain)
+- Window Buffer Memory
+- Sub-Workflow Architecture
+- Hacker News API
+- Wikipedia API
+- SerpAPI (Google Search)
+- Calculator Tool
+
+---
