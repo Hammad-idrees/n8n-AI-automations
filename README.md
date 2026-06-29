@@ -311,3 +311,34 @@ The workflow automatically provides:
 - Consistent pricing communication
 - Professional sponsor engagement
 
+---
+
+### 9. WhatsApp AI Personal Assistant Automation
+
+Flow: WhatsApp Trigger → AI Agent → OpenAI GPT-4o Mini → Memory Buffer → Tools (Wikipedia, Calculator, Gmail) → WhatsApp Response
+
+Description: An AI-powered WhatsApp assistant built with n8n that automatically receives user messages, understands requests, maintains conversation history, provides intelligent responses, performs calculations, retrieves information, and sends emails when required.
+
+Features
+
+- Receives WhatsApp messages automatically
+- Uses OpenAI GPT-4o Mini for intelligent conversations
+- Maintains chat history using memory buffer
+- Answers factual queries using Wikipedia integration
+- Performs mathematical calculations using AI tools
+- Generates and sends emails through Gmail
+- Replies directly to users through WhatsApp Business Cloud API
+- Fully automated AI assistant workflow
+
+Technologies Used
+
+- n8n Automation Platform
+- OpenAI GPT-4o Mini
+- WhatsApp Business Cloud API
+- AI Agent
+- Memory Buffer
+- Wikipedia API
+- Calculator Tool
+- Gmail Integration
+
+---
